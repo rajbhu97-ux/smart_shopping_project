@@ -7,6 +7,7 @@ from .serializers import CatagorySerializer, ProductSerializer, UserSerializer, 
 from api.utils.utils import hash_password, check_password
 from api.model.request_models import UserLoginRequest, CartListRequest
 from api.authentication.auth import auth_wrapper
+from api.logging.logging import logger
 
 
 class UserRegister(APIView):
@@ -83,9 +84,9 @@ class CartList(APIView):
     def get(self):
         pass
 
-    # @auth_wrapper
+    @auth_wrapper
     def post(self, request):
-        print("function called.")
+        logger.info("Cart list post func called..")
         input_data = CartListRequest.from_dict(request.data)
         user_id = "request.user.id"
         request.data.update({'user': user_id})
