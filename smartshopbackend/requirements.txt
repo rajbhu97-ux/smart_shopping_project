@@ -1,0 +1,9 @@
+asgiref==3.8.1
+attrs==25.3.0
+bcrypt==4.3.0
+Django==5.2.3
+djangorestframework==3.16.0
+dnspython==2.7.0
+mongoengine==0.29.1
+pymongo==4.13.2
+sqlparse==0.5.3
