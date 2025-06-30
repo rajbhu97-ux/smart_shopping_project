@@ -13,12 +13,8 @@ class Catagory(FilteredDictConvertible):
 class Product(FilteredDictConvertible):
     name: str
     price: int
-    catagory: Catagory
+    catagory: str
     description: str
-
-    def __attrs_post_init__(self):
-        if isinstance(self.catagory, dict):
-            self.catagory = Catagory.from_dict(self.catagory)
 
 
 @attr.define
@@ -29,10 +25,7 @@ class UserLoginRequest(FilteredDictConvertible):
 
 @attr.define
 class CartListRequest(FilteredDictConvertible):
-    products: Product
+    products: str
     quantity: int
+    user: Optional[str] = None
     # total_price : Optional[int]
-
-    def __attrs_post_init__(self):
-        if isinstance(self.products, dict):
-            self.products = Product.from_dict(self.products)
