@@ -19,6 +19,18 @@ class User(Document):
     email = fields.StringField(required=True, max_length=60)
     password = fields.StringField(required=True, max_length=70)
 
+
+class UserAddress(Document):
+    user = fields.ReferenceField(User, required=True)
+    address_line_1 = fields.StringField(required=True, max_length=70)
+    pin_code = fields.StringField(required=True, max_length=70)
+    district = fields.StringField(required=True, max_length=70)
+    state = fields.StringField(required=True, max_length=70)
+
+    def get_address(self):
+        return dict(self)
+
+
 class AuthToken(Document):
     user = fields.StringField(required= True, max_length=50)
     token = fields.StringField(default = lambda : str(uuid.uuid4()), unique=True)
@@ -29,12 +41,25 @@ class AuthToken(Document):
 
 
 class CartItem(Document):
-    user = fields.StringField(required=True)
+    user = fields.ReferenceField(User, required=True)
     products= fields.ReferenceField(Product, required=True)
     quantity= fields.IntField(required=True)
 
     def get_total(self, price):
         return self.quantity * price
+    
+
+class OrderItem(Document):
+    user = fields.StringField(required=True)
+    cart_items = fields.ListField(required=True)
+    order_status = fields.StringField(required=True)
+
+
+class Payment(Document):
+    user = fields.StringField(required=True)
+    order_id = fields.ReferenceField(OrderItem, required=True)
+    payment_method = fields.StringField(required=True)
+    payment_status = fields.StringField(required=True)
 
 
 

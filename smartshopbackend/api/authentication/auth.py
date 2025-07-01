@@ -11,7 +11,7 @@ def auth_wrapper(func):
         token = AuthToken.objects(token=token).first()
         if not token or not token.is_valid():
             return Response({"error": "Auth failure"}, status=400)
-        request.user = User.objects(id=token.user)
-        result = func(request, *args, **kwargs)
+        request.user = User.objects(id=token.user).first()
+        result = func(self, request, *args, **kwargs)
         return result
     return inner

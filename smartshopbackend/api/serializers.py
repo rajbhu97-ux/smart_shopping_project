@@ -1,6 +1,7 @@
 from rest_framework import serializers
-from .models import Catagory, Product, User, CartItem
+from .models import Catagory, Product, User, CartItem, OrderItem, Payment, UserAddress
 from attr import fields
+from rest_framework.response import Response
 
 class CatagorySerializer(serializers.Serializer):
     id = serializers.CharField(read_only=True)
@@ -33,6 +34,18 @@ class UserSerializer(serializers.Serializer):
     def create(self, validated_data):
         return User.objects.create(**validated_data)
     
+class UserAddressSerializer(serializers.Serializer):
+    id = serializers.CharField(read_only=True)
+    user = serializers.CharField()
+    address_line_1 = serializers.CharField()
+    pin_code = serializers.CharField()
+    district = serializers.CharField()
+    state = serializers.CharField()
+
+    def create(self, validated_data):
+        return UserAddress.objects.create(**validated_data)
+    
+
 class CartItemSerializer(serializers.Serializer):
     id = serializers.CharField(read_only=True)
     user = serializers.CharField()
@@ -41,3 +54,18 @@ class CartItemSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         return CartItem.objects.create(**validated_data)
+    
+
+class OrderItemSerializer(serializers.Serializer):
+    id = serializers.CharField(read_only=True)
+    user = serializers.CharField()
+    cart_items = serializers.CharField()
+    order_status = serializers.CharField()
+
+
+class PaymentSerializer(serializers.Serializer):
+    id = serializers.CharField(read_only=True)
+    user = serializers.CharField()
+    order_id = serializers.CharField()
+    payment_method = serializers.CharField()
+    payment_status = serializers.CharField()

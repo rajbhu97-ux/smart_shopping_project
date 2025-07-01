@@ -27,5 +27,4 @@ class UserLoginRequest(FilteredDictConvertible):
 class CartListRequest(FilteredDictConvertible):
     products: str
     quantity: int
-    user: Optional[str] = None
-    # total_price : Optional[int]
+    user: Optional[str] = ""
